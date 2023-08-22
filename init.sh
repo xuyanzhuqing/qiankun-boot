@@ -8,7 +8,7 @@ git_url=https://e.coding.net/vite-man/we-project/$target_dir.git
 port=3000
 projects=(index mysql opengauss)
 projects_len=${#projects[*]}
-workdir=$(pwd)
+workdir=$(pwd)/qiankun-boot
 
 declare -A port_map
 rm -rf ./$target_dir
@@ -142,6 +142,7 @@ do
     echo $(pwd)
     yarn create react-app $project --template typescript
     yarn workspace $project add react-app-rewired react-router-dom antd@^4.24.13
+    yarn workspace $project add @babel/plugin-proposal-private-property-in-object -D
     app_util $project $int
 
     let "int++"
