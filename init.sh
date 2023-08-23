@@ -2,35 +2,18 @@
 
 # 0 | 1
 dev_mode=${1:-1}
-target_dir=mic-frontend-project
 
-git_url=https://e.coding.net/vite-man/we-project/$target_dir.git
-port=3000
-projects=(index mysql opengauss)
-projects_len=${#projects[*]}
 workdir=$(pwd)/qiankun-boot
 
-declare -A port_map
+source $workdir/conf.sh
+
+projects_len=${#projects[*]}
+
 rm -rf ./$target_dir
 
-# https://blog.logrocket.com/build-monorepo-next-js/
-# 测试版本
-node_version=$(node -v)
-yarn_version=$(yarn -v)
-lerna_version=$(lerna -v)
+source $workdir/checker.sh
 
-echo "              当前版本 测试版本"
-echo node version: $node_version v18.16.0
-echo yarn version: $yarn_version 3.6.1
-echo lerna version: $lerna_version 7.1.0
-
-# https://www.yarnpkg.cn/getting-started/install
-# 使用最新node
-nvm use v19.1.0
-
-# corepack enable
-
-# corepack prepare yarn@stable --activate
+declare -A port_map
 
 # 初始化项目
 if [ $dev_mode == '1' ]
@@ -41,9 +24,6 @@ else
 fi
 
 cd $target_dir
-
-# 使用最新 yarn
-# yarn init -2
 
 lerna init --independent
 git add .
@@ -201,6 +181,8 @@ do
   let "mirco_index=mirco_index+6"
   let "nginx_index=nginx_index+6"
 done
+
+rm ./package-lock.json
 
 git add .
 git commit -m "qiankun & nginx configuration"
