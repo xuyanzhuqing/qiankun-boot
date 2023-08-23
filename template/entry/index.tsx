@@ -9,6 +9,7 @@ import { registerMicroApps, start } from 'qiankun';
 const isPro = process.env.NODE_ENV === 'production'
 
 registerMicroApps([
+  // qiankun-boot-injector
 ]);
 
 // 启动 qiankun

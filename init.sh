@@ -154,11 +154,12 @@ git ci -m "init project"
 
 
 index=1
-mirco_index=11
-nginx_index=48
 while(( $index<projects_len ))
 do
   project=${projects[$index]}
+
+  nginx_index=$(awk '/qiankun-boot-injector/{print NR}' ./nginx.conf)
+  mirco_index=$(awk '/qiankun-boot-injector/{print NR}' ./apps/index/src/index.tsx)
 
   gsed -i $nginx_index'a\
         location /child/'${project}' {\
@@ -178,8 +179,6 @@ do
   ' ./apps/index/src/index.tsx
 
   let "index++"
-  let "mirco_index=mirco_index+6"
-  let "nginx_index=nginx_index+6"
 done
 
 rm ./package-lock.json
